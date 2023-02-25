@@ -1,6 +1,9 @@
 <template>
   <div class="toDoList">
-    <div class="emptyInput" v-if="emptyInput">Введите текст</div>
+    <transition name="emptyInputTran">
+        <div class="emptyInput" v-if="emptyInput">Введите текст</div>
+    </transition>
+
     <h2>Список дел</h2>
 
     <div class="input">
@@ -8,20 +11,26 @@
         <button class="addBtn" v-on:click="addList">Добавить</button>
     </div>
 
-    <div v-for="(task, index,) in tasks" v-bind:key="task.id">
-        <div class="list">
-            <div class="text" v-bind:class="{ doneText: this.tasks[index].done}" ref="listText">{{ task.taskText }}</div>
-            <div class="listButtons">
-                <button class="done" v-on:click=doneTask(index)>done</button>
-                <button class="delete" v-on:click=deleteTask(index)>delete</button>
+    
+        <transition-group name="tasksTran" >
+            <div v-for="(task, index,) in tasks" v-bind:key="task.id" class="listVFor">
+                <div class="list">
+                    <div class="text" v-bind:class="{ doneText: this.tasks[index].done}" ref="listText">{{ task.taskText }}</div>
+                    <div class="listButtons">
+                        <button class="done" v-on:click=doneTask(index)>done</button>
+                        <button class="delete" v-on:click=deleteTask(index)>delete</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </transition-group>
+    
 
-    <div v-if="this.tasks == 0">
-        <div class="emptyTasks">Список дел пуст</div>
-    </div>
-  </div>
+    <transition name="emptyTasksTran" mode="in-out">
+        <div v-if="this.tasks == 0">
+            <div class="emptyTasks">Список дел пуст</div>
+        </div>
+    </transition>
+  </div> 
 </template>
 
 <script>
@@ -77,9 +86,12 @@ export default {
     background-color: rgb(203, 212, 69);
     border-radius: 20px;
     position: relative;
+    /* min-height: 0;
+    max-height: auto;
+    transition: all 0.5s ease; */
 }
 .emptyInput{
-    padding: 15px 30px;
+    padding: 15px 50px;
     background-color: crimson;
     font-size: 25px;
     width: fit-content;
@@ -95,7 +107,8 @@ h2{
     margin: 20px 0;
 }
 .input{
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 input{
     width: 300px;
@@ -159,4 +172,67 @@ input{
     font-weight: 500;
     margin: 20px 0 15px;
 }
+
+/* ========= animation ======== */
+.emptyInputTran-enter-from,.emptyInputTran-leave-to{
+    opacity: 0;
+    transform: translateY(-30px);
+}
+.emptyInputTran-enter-to,.emptyInputTran-leave-from{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.emptyInputTran-enter-active,.emptyInputTran-leave-active{
+    transition: all 0.5s ease;
+}
+
+
+.emptyTasksTran-enter-from,.emptyTasksTran-leave-to{
+    opacity: 0;
+    transform: translateY(30px);
+}
+.emptyTasksTran-enter-to,.emptyTasksTran-leave-from{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.emptyTasksTran-enter-active{
+    transition: all 0.5s ease;
+}
+.emptyTasksTran-leave-active{
+    transition: all 0.2s ease;
+    position: absolute;
+    /* width: 100%; */
+}
+
+
+.tasksTran-enter-from{
+    opacity: 0;
+    transform: translateY(-20px);
+}
+.tasksTran-enter-to{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.tasksTran-enter-active{
+    transition: all 0.4s ease;
+}
+.tasksTran-leave-from{
+    opacity: 0.7;
+    transform: translateY(0px);
+}
+.tasksTran-leave-to{
+    opacity: 0;
+    transform: translateY(-20px);
+    transform: translateX(30px);
+}
+.tasksTran-leave-active{
+    transition: all 0.2s ease;
+    position: absolute;
+    width: 95%;
+}
+.tasksTran-move{
+    transition: all 0.4s ease;
+}
+
+
 </style>

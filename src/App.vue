@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="backgroundImg">
-      <ToDOList/>
+      <div class="nav">
+        <router-link to="/todo">to do</router-link>
+        <router-link to="/">home</router-link>
+        <router-link to="/profile">profile</router-link>
+      </div>
+      <!-- <ToDOList/> -->
 
       <div class="modalWindow">
         <h3 ref="title">{{ title }}</h3>
@@ -12,14 +17,15 @@
         </div>
         <button v-on:click="toggleShowModal">Show Modal</button>
       </div>
+      <router-view/>
     </div>
-    
   </div>
+  
 </template>
 
 <script>
 import Modal from './components/Modal.vue'
-import ToDOList from './components/ToDOList.vue'
+import ToDOList from './view/ToDOList.vue'
 
 export default {
   name: 'App',
@@ -40,11 +46,21 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+  font-family: 'Tilt Neon', cursive;
+}
+.nav{
+  display: flex;
+  padding: 15px;
+  max-width: 300px;
+  justify-content: space-between;
+  margin: 0 auto;
+  color: aliceblue;
 }
 .backgroundImg{
   position: absolute;
