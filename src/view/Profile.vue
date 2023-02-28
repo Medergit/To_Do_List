@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile">
     <h2>Profile</h2>
   </div>
 </template>
@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .profile{
+    text-align: center;
+  }
 </style>

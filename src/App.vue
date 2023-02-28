@@ -1,23 +1,29 @@
 <template>
   <div>
     <div class="backgroundImg">
-      <div class="nav">
-        <router-link to="/todo">to do</router-link>
-        <router-link to="/">home</router-link>
-        <router-link to="/profile">profile</router-link>
-      </div>
-      <!-- <ToDOList/> -->
-
-      <div class="modalWindow">
-        <h3 ref="title">{{ title }}</h3>
-        <div v-if="showModal">
-          <Modal titleText="new text" v-bind:bodyText="bodyText" v-on:close="toggleShowModal">
-            <p>slots</p>
-          </Modal>
+      <div>
+        <div class="nav">
+          <router-link to="/todo">to do</router-link>
+          <router-link to="/">home</router-link>
+          <router-link to="/profile">profile</router-link>
         </div>
-        <button v-on:click="toggleShowModal">Show Modal</button>
+        <!-- <ToDOList/> -->
+
+        <div class="modalWindow">
+          <h3 ref="title">{{ title }}</h3>
+          <div v-if="showModal">
+            <Modal titleText="new text" v-bind:bodyText="bodyText" v-on:close="toggleShowModal">
+              <p>slots</p>
+            </Modal>
+          </div>
+          <button v-on:click="toggleShowModal">Show Modal</button>
+        </div>
+        <router-view/>
       </div>
-      <router-view/>
+      <footer>
+          <div>Footer</div>
+          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur eum deserunt excepturi et architecto soluta quaerat, molestias doloremque! Maiores sapiente ducimus ratione velit id sit! Quis dicta dignissimos vero illum.</div>
+      </footer>
     </div>
   </div>
   
@@ -59,8 +65,15 @@ export default {
   padding: 15px;
   max-width: 300px;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 10px auto;
+}
+.nav>a{
   color: aliceblue;
+  font-size: 20px;
+  text-decoration-line: none;
+}
+.nav>a:hover{
+  color: aquamarine;
 }
 .backgroundImg{
   position: absolute;
@@ -69,6 +82,9 @@ export default {
   background-image: url(../public/backgroundimg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .modalWindow{
   width: 30%;
@@ -84,5 +100,11 @@ export default {
   padding: 10px;
   background-color: aqua;
   border: none;
+}
+footer{
+  padding: 50px;
+  text-align: center;
+  color: white;
+  background-color: black;
 }
 </style>
