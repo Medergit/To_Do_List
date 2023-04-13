@@ -1,5 +1,8 @@
 # vue-project
 
+little todo project
+
+
 ## Project setup
 ```
 npm install
